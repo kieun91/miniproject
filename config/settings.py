@@ -127,3 +127,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
+# 로그아웃시 이동하는 URL
+LOGOUT_REDIRECT_URL = '/'
