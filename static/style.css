@@ -1,0 +1,19 @@
+textarea {
+    width:100%;
+}
+
+input[type=submit] {
+    margin-top:10px;
+}
+
+/* 직접 정의한 CSS 클래스 */
+.table-green {
+    background-color: green;
+    color: white; /* 텍스트 색상을 흰색으로 설정 */
+}
+
+<style>
+    .btn.btn-primary {
+        margin-top: 10px; /* 원하는 상단 마진 크기를 여기에 입력하세요. */
+    }
+</style>

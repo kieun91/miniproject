@@ -28,7 +28,7 @@
     </div>
     {% endfor %}
     <!-- 답변 등록 -->
-    <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3">
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3" style="margin-top: 10px;"> <!-- 여기에 스타일을 직접 추가 -->
         {% csrf_token %}
         <!-- 오류표시 Start -->
         {% if form.errors %}
