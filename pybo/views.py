@@ -1,11 +1,28 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Question
-from django.http import HttpResponseNotAllowed
+import openpyxl
+from django.http import HttpResponse, HttpResponseNotAllowed
 from .forms import QuestionForm, AnswerForm
 from django.core.paginator import Paginator
 
+def export_to_excel(request):
+    questions = Question.objects.all()
 
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Questions"
+
+    ws.append(["번호", "제목", "작성일시"])
+
+    for question in questions:
+        create_date_without_tz = question.create_date.replace(tzinfo=None)
+        ws.append([question.id, question.subject, create_date_without_tz])
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="questions.xlsx"'
+    wb.save(response)
+    return response
 def index(request):
     page = request.GET.get('page', '1')  # 페이지
     question_list = Question.objects.order_by('-create_date')
