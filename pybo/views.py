@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Question
 import openpyxl
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from .forms import QuestionForm, AnswerForm
 from django.core.paginator import Paginator
+from django.urls import reverse
 
 def export_to_excel(request):
     questions = Question.objects.all()
@@ -66,3 +67,15 @@ def question_create(request):
         form = QuestionForm()
     context = {'form': form}
     return render(request, 'pybo/question_form.html', context)
+
+def question_delete(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+
+    answers = question.answer_set.all()
+
+    for answer in answers:
+        answer.delete()
+
+
+    question.delete()
+    return HttpResponseRedirect(reverse('pybo:index'))

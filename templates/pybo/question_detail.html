@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-3">
-    <!-- 질문 -->
-    <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- 질문 -->
+        <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+        <!-- 질문 삭제 -->
+        <form action="{% url 'pybo:question_delete' question.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="submit" value="질문 삭제" class="btn btn-danger">
+        </form>
+    </div>
     <div class="card my-3">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
@@ -28,7 +36,7 @@
     </div>
     {% endfor %}
     <!-- 답변 등록 -->
-    <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3" style="margin-top: 10px;"> <!-- 여기에 스타일을 직접 추가 -->
+    <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3" style="margin-bottom: 20px;">
         {% csrf_token %}
         <!-- 오류표시 Start -->
         {% if form.errors %}
